@@ -19,12 +19,22 @@
 \renewcommand{\kanjifamilydefault}{\gtdefault}  % 日本語の標準をゴシック体にする
 \renewcommand{\familydefault}{\sfdefault}      % 英数字の標準をサンセリフ（Arial風）にする
 
-
 % --- [色の設定] ---
 % ブロックの見出し（block title）の色をカスタマイズ
 \setbeamercolor{block title}{fg=white, bg=cyan!70!black} % 文字を白、背景を濃い水色に
 \setbeamercolor{block body}{bg=white}                   % 本文の背景を白に
 
+
+% --- [数字を1桁なら全角にする命令] ---
+\newcommand{\zenkakunum}[1]{%
+  \ifnum#1<10%
+    \ifcase#1 ０\or １\or ２\or ３\or ４\or ５\or ６\or ７\or ８\or ９\fi%
+  \else%
+    \number#1%
+  \fi%
+}
+
+% 図の改良
 \renewcommand{\figurename}{}
 \renewcommand{\thefigure}{図\zenkakunum{\value{figure}}}
 
@@ -77,9 +87,9 @@
   % --- 3. 2段組み ---
   \begin{columns}[t] 
     \begin{column}{.48\linewidth}
-      \begin{block}{\large ひだり}
+      \begin{myblock}{\large ひだり}
         左側のコンテンツ。
-      \end{block}
+      \end{myblock}
     \end{column}
 
     \begin{column}{.02\linewidth}
@@ -87,9 +97,9 @@
     \end{column}
 
     \begin{column}{.48\linewidth}
-      \begin{block}{\large みぎ}
+      \begin{myblock}{\large みぎ}
         右側のコンテンツ。
-      \end{block}
+      \end{myblock}
     \end{column}
   \end{columns}
 
