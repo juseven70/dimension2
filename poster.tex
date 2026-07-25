@@ -1,0 +1,73 @@
+\documentclass[unicode]{beamer}
+
+% --- [設定] ---
+\usepackage{luatexja}
+\usepackage[orientation=portrait,size=a0,scale=1.4]{beamerposter}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetheme{default}
+
+\setbeamertemplate{navigation symbols}{}
+% ページ全体の基本余白を2cmに設定
+\setbeamersize{text margin left=2cm, text margin right=2cm}
+
+% --- [フォントの設定：CloudLaTeX用] ---
+\usepackage[haranoaji,deluxe]{luatexja-preset} % 原ノ味フォントを使用するプリセット
+\renewcommand{\kanjifamilydefault}{\gtdefault}  % 日本語の標準をゴシック体にする
+\renewcommand{\familydefault}{\sfdefault}      % 英数字の標準をサンセリフ（Arial風）にする
+
+% --- [色の設定] ---
+% ブロックの見出し（block title）の色をカスタマイズ
+\setbeamercolor{block title}{fg=white, bg=cyan!70!black} % 文字を白、背景を濃い水色に
+\setbeamercolor{block body}{bg=white}                   % 本文の背景を白に
+
+
+\begin{document}
+\begin{frame}[t, fragile]
+
+  % --- 1. タイトル部分 ---
+  \vspace{1cm} % 紙の一番上との間の隙間
+  \nointerlineskip
+  \begin{tcolorbox}[
+      enhanced, sharp corners, boxrule=0pt,
+      colback=cyan!20, 
+      width=\textwidth,             % 本文の幅（左右余白を除いた幅）に合わせる
+      % grow to left/right を消すことで、setbeamersize で設定した余白が活きます
+      halign=center, height=10cm
+    ]
+    {\Huge \bfseries A0日本語ポスター タイトル} \par
+    \vspace{1cm}
+    {\raggedleft \Large 所属 \hspace{2cm} \par}
+    {\raggedleft \Large 著者 \hspace{2cm} \par}
+  \end{tcolorbox}
+
+  % --- 2. 中央の罫線（開始位置を調整） ---
+  \begin{tikzpicture}[remember picture, overlay]
+    \draw [gray!50, line width=3pt] 
+      % yshift を -13cm くらいにすると、高さ10cmの箱の下に少し隙間が空きます
+      ([yshift=-13cm]current page.north) -- ([yshift=2cm]current page.south);
+  \end{tikzpicture}
+
+  \vspace{3cm} % タイトルボックスと本文の間の距離
+
+  % --- 3. 2段組み ---
+  \begin{columns}[t] 
+    \begin{column}{.48\linewidth}
+      \begin{block}{\large ひだり}
+        左側のコンテンツ。
+      \end{block}
+    \end{column}
+
+    \begin{column}{.02\linewidth}
+      % 中央の線のスペース
+    \end{column}
+
+    \begin{column}{.48\linewidth}
+      \begin{block}{\large みぎ}
+        右側のコンテンツ。
+      \end{block}
+    \end{column}
+  \end{columns}
+
+\end{frame}
+\end{document}
