@@ -1,18 +1,33 @@
-- name: Compile LaTeX
+name: "Compile LaTeX Poster"
+
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+    branches:
+      - "**"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v4
+
+      - name: "Compile"
         uses: xu-cheng/latex-action@v3
         with:
-          # 1. コンパイルするファイル名
-          root_file: root.tex
-          
-          # 2. 作業するフォルダ名（あなたの実際のフォルダ名に変えてください）
-          working_directory: 20260725中間発表①
-          
-          compiler: lualatex
+          root_file: "root.tex"
+          # ↓ ここを自分のフォルダ名に書き換える
+          working_directory: "20260725中間発表①"
+          compiler: "lualatex"
           args: "-file-line-error -halt-on-error -interaction=nonstopmode"
 
-      - name: Upload PDF
+      - name: "Upload"
         uses: actions/upload-artifact@v4
         with:
-          name: Poster-PDF-${{ github.ref_name }}
-          # 3. PDFが作成される場所もフォルダ名を含めて指定
-          path: 20260725中間発表①/root.pdf
+          name: "Poster-PDF-${{ github.ref_name }}"
+          # ↓ ここも自分のフォルダ名を含める
+          path: "20260725中間発表①/root.pdf"
