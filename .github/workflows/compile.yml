@@ -1,33 +1,34 @@
-name: Compile LaTeX Poster
+name: "Compile LaTeX Poster"
 
 on:
   push:
-    # すべてのブランチへのプッシュで実行
     branches:
-      - '**' 
+      - "**"
   pull_request:
-    # プルリクエスト（マージ前の確認）時も実行
     branches:
-      - '**'
+      - "**"
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Git repository
+      - name: "Checkout"
         uses: actions/checkout@v4
 
-      - name: Compile LaTeX
+      - name: "Compile"
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: root.tex
-          compiler: lualatex
-          args: "-file-line-error -halt-on-error -interaction=nonstopmode"
+          root_file: "root.tex"
+          working_directory: "20260725中間発表①"
+          # ↓ compiler を指定せず、latexmk を使う設定にします
+          latexmk_use_lualatex: true 
+          # ↓ latexmk を使う場合は、args ではなくこれを使います
+          latexmk_shell_escape: true
 
-      - name: Upload PDF
+      - name: "Upload"
         uses: actions/upload-artifact@v4
         with:
-          # ダウンロード名にブランチ名を含める（例: Poster-PDF-feature-test）
-          name: Poster-PDF-${{ github.ref_name }}
-          path: root.pdf
+          # 「Poster-PDF-実行番号」という名前にする
+          name: "Poster-PDF-run-${{ github.run_number }}"
+          path: "20260725中間発表①/root.pdf"
