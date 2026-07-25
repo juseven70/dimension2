@@ -1,0 +1,33 @@
+name: Compile LaTeX Poster
+
+on:
+  push:
+    # すべてのブランチへのプッシュで実行
+    branches:
+      - '**' 
+  pull_request:
+    # プルリクエスト（マージ前の確認）時も実行
+    branches:
+      - '**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v4
+
+      - name: Compile LaTeX
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: root.tex
+          compiler: lualatex
+          args: "-file-line-error -halt-on-error -interaction=nonstopmode"
+
+      - name: Upload PDF
+        uses: actions/upload-artifact@v4
+        with:
+          # ダウンロード名にブランチ名を含める（例: Poster-PDF-feature-test）
+          name: Poster-PDF-${{ github.ref_name }}
+          path: root.pdf
