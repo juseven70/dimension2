@@ -29,6 +29,6 @@ jobs:
       - name: "Upload"
         uses: actions/upload-artifact@v4
         with:
-          name: "Poster-PDF-${{ github.ref_name }}"
-          # ↓ ここも自分のフォルダ名を含める
+          # 「Poster-PDF-実行番号」という名前にする
+          name: "Poster-PDF-run-${{ github.run_number }}"
           path: "20260725中間発表①/root.pdf"
