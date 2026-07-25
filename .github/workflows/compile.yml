@@ -20,7 +20,7 @@ jobs:
         uses: xu-cheng/latex-action@v3
         with:
           root_file: "root.tex"
-          working_directory: "poster_ipa"
+          working_directory: "20260725中間発表①"
           # ↓ compiler を指定せず、latexmk を使う設定にします
           latexmk_use_lualatex: true 
           # ↓ latexmk を使う場合は、args ではなくこれを使います
