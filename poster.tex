@@ -10,35 +10,59 @@
 \setbeamertemplate{navigation symbols}{}
 % ページ全体の基本余白を2cmに設定
 \setbeamersize{text margin left=2cm, text margin right=2cm}
+\addtobeamertemplate{block begin}{}{\setlength{\parskip}{0.5em}}
+\addtobeamertemplate{block end}{}{\vspace{1em}} % ブロックが終わるたびに下に隙間を作る
+\linespread{1.1}
 
 % --- [フォントの設定：CloudLaTeX用] ---
 \usepackage[haranoaji,deluxe]{luatexja-preset} % 原ノ味フォントを使用するプリセット
 \renewcommand{\kanjifamilydefault}{\gtdefault}  % 日本語の標準をゴシック体にする
 \renewcommand{\familydefault}{\sfdefault}      % 英数字の標準をサンセリフ（Arial風）にする
 
+
 % --- [色の設定] ---
 % ブロックの見出し（block title）の色をカスタマイズ
 \setbeamercolor{block title}{fg=white, bg=cyan!70!black} % 文字を白、背景を濃い水色に
 \setbeamercolor{block body}{bg=white}                   % 本文の背景を白に
+
+\renewcommand{\figurename}{}
+\renewcommand{\thefigure}{図\zenkakunum{\value{figure}}}
+
+\makeatletter
+\renewcommand{\p@figure}{}
+\makeatother
+
+\setbeamertemplate{caption}{\insertcaptionnumber ： \insertcaption}
+
+% ブロック用のカウンター
+\newcounter{blockcount}
+% ブロックを自動ナンバリングで開始する命令
+% 使い方: \begin{myblock}{研究背景} ．．． \end{myblock}
+\newenvironment{myblock}[1]{%
+  \refstepcounter{blockcount}%
+  \begin{block}{\large \zenkakunum{\value{blockcount}}. #1}%
+}{%
+  \end{block}%
+}
 
 
 \begin{document}
 \begin{frame}[t, fragile]
 
   % --- 1. タイトル部分 ---
-  \vspace{1cm} % 紙の一番上との間の隙間
+  \vspace{1em} % 紙の一番上との間の隙間
   \nointerlineskip
   \begin{tcolorbox}[
       enhanced, sharp corners, boxrule=0pt,
       colback=cyan!20, 
       width=\textwidth,             % 本文の幅（左右余白を除いた幅）に合わせる
       % grow to left/right を消すことで、setbeamersize で設定した余白が活きます
-      halign=center, height=10cm
+      halign=center, height=7em
     ]
     {\Huge \bfseries A0日本語ポスター タイトル} \par
-    \vspace{1cm}
-    {\raggedleft \Large 所属 \hspace{2cm} \par}
-    {\raggedleft \Large 著者 \hspace{2cm} \par}
+    \vspace{1em}
+    {\raggedleft 所属 \hspace{1cm} \par}
+    {\raggedleft 著者 \hspace{1cm} \par}
   \end{tcolorbox}
 
   % --- 2. 中央の罫線（開始位置を調整） ---
@@ -48,7 +72,7 @@
       ([yshift=-13cm]current page.north) -- ([yshift=2cm]current page.south);
   \end{tikzpicture}
 
-  \vspace{3cm} % タイトルボックスと本文の間の距離
+  \vspace{0.1em} % タイトルボックスと本文の間の距離
 
   % --- 3. 2段組み ---
   \begin{columns}[t] 
